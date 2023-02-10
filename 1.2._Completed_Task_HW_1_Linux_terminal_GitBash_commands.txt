@@ -37,10 +37,19 @@ ls -la
 cat > 1.txt
 
 10) + написать туда что-нибудь, любой текст.
-111
-222
-333
-444
+19
+28
+37
+46
+55
+64
+73
+82
+91
+TEST_1
+test_2
+AAA
+aaa
 
 11) + сохранить и выйти.
 Ctrl + C
@@ -100,19 +109,18 @@ curl "http://162.55.220.72:5005/terminal-hw-request"
 Создаем txt файл: 
 touch script_1.txt
 
-Открываем редактирование txt:
+Открываем редактирование script_1.txt:
 vim script_1.txt
 i
 
 Пишем скрипт:
 #!/bin/bash
-mkdir script_d;
-cd script_d;
-mkdir d_1 d_2 d_3;
-cd d_1;
-touch test_1.txt test_2.txt test_3.txt test_4.json test_5.json;
+mkdir script_dir;
+cd script_dir;
 mkdir dir_1 dir_2 dir_3;
-mv test_1.txt test_2.txt dir_1;
+cd dir_1;
+touch test_1.txt test_2.txt test_3.txt test_4.json test_5.json;
+mkdir dir_4 dir_5 dir_6;
 ls -la
 
 Сохраняем и выходим с txt:

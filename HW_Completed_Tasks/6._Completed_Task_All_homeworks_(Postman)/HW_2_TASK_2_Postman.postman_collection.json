@@ -1,0 +1,814 @@
+{
+	"info": {
+		"_postman_id": "6439ce53-6790-40ac-b54d-2b7b6d528892",
+		"name": "E_HW_2_Postman_TASK_2_(07.07 17:17)",
+		"description": "[http://162.55.220.72:5005/user_info_3](http://162.55.220.72:5005/user_info_3)\n\n1.  Отправить запрос.\n2.  Статус код 200\n3.  Спарсить response body в json.\n4.  Проверить, что name в ответе равно name s request (name вбить руками.)\n5.  Проверить, что age в ответе равно age s request (age вбить руками.)\n6.  Проверить, что salary в ответе равно salary s request (salary вбить руками.)\n7.  Спарсить request.\n8.  Проверить, что name в ответе равно name s request (name забрать из request.)\n9.  Проверить, что age в ответе равно age s request (age забрать из request.)\n10.  Проверить, что salary в ответе равно salary s request (salary забрать из request.)\n11.  Вывести в консоль параметр family из response.\n12.  Проверить что u_salary_1_5_year в ответе равно salary*4 (salary забрать из request)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19866732"
+	},
+	"item": [
+		{
+			"name": "1. Отправить запрос. / 2. Статус код 200 / 3. Спарсить response body в json.",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// 1. Отправить запрос.\r",
+							"// Создаем запрос:\r",
+							"// POST\r",
+							"// http://162.55.220.72:5005/user_info_3\r",
+							"// Body => form-data:\r",
+							"// KEY:       VALUE:\r",
+							"// name       Ayrat\r",
+							"// age        35\r",
+							"// salary     1000\r",
+							"\r",
+							"// 2. Статус код 200\r",
+							"// Ставим сниппет без изменений:\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// 3. Спарсить response body в json.\r",
+							"// Спарсить - значить забрать; response - это ответ сервера на наш запрос; body - это тело ответа.\r",
+							"// Чтобы спарсить тело ответа, используем команду: pm.response.json(); \r",
+							"// Чтобы тело ответа можно было прочитать в консоли, pm.response.json() помещаем в переменную jsonData, и, эту переменную закидываем в console.log()\r",
+							"let jsonData = pm.response.json();\r",
+							"console.log('response_parsing:', jsonData);\r",
+							"// Body в консоли выглядит так:\r",
+							"// {age: \"35\", family: {…}, name: \"Ayrat\"…}\r",
+							"// Свойства body можно раскрыть используя активные стрелки перед фигурной скобкой.\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Ayrat",
+							"type": "text"
+						},
+						{
+							"key": "age",
+							"value": "35",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "1000",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://162.55.220.72:5005/user_info_3",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"user_info_3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. Проверить, что name в ответе равно name s request (name вбить руками.)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// 4. Проверить, что name в ответе равно name s request (name вбить руками.)\r",
+							"// Создаем запрос:\r",
+							"// POST\r",
+							"// http://162.55.220.72:5005/user_info_3\r",
+							"// Body => form-data:\r",
+							"// KEY:       VALUE:\r",
+							"// name       Ayrat\r",
+							"// age        35\r",
+							"// salary     1000\r",
+							"\r",
+							"// ПАРСИМ name С ОТВЕТА.\r",
+							"// Объявляем переменную, куда будет сохраняться парсинг json с ответа (в этом json лежит нужное нам свойство name):\r",
+							"let jsonData = pm.response.json();\r",
+							"// Объявляем переменную, куда будет сохраняться свойство name из тела ответа, после парсинга:\r",
+							"let user_name = jsonData.name;\r",
+							"// name из ответа у нас теперь есть, осталось сравнить его с name из запроса.\r",
+							"\r",
+							"// ТЕСТИРУЕМ СООТВЕТСТВИЕ name ИЗ ЗАПРОСА И ОТВЕТА.\r",
+							"// Чтобы протестировать сравнение двух значений из запроса и ответа, используем сниппет: Response body: JSON value check\r",
+							"// Инструкция по сниппету:\r",
+							"// >> В сниппете, \"Your test name\" - это будущий текст сообщения во вкладке \"Test Results\", его можно изменить на желаемый текст.\r",
+							"// >> В сниппете, строку var jsonData = pm.response.json(); удаляем, т.к. выше уже эта строка была создана для вывода свойства name с ответа.\r",
+							"// >> В сниппете, вместо (jsonData.value) вписываем свою переменную (user_name), куда мы сохраняем значение name с ответа.\r",
+							"// >> В сниппете, вместо (100) вписываем руками то имя ('Ayrat'), которое мы отправляем в запросе.\r",
+							"// В итоге данный сниппет протестирует соответствие значений свойства name в запросе и в ответе:\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    pm.expect(user_name).to.eql('Ayrat');\r",
+							"});\r",
+							"// Если значения совпадают, то в окне ответа, во вкладке \"Test Results\" отобразится зеленый прямоугольник с названием \"PASS\".\r",
+							"// Если значения не совпадают, то в окне ответа, во вкладке \"Test Results\" отобразится красный прямоугольник с названием \"FAIL\".\r",
+							"\r",
+							"// Вывод значений в консоль для визаульного контроля:\r",
+							"console.log('variable \"jsonData\":', jsonData);\r",
+							"console.log('variable \"user_name\":', user_name);\r",
+							"console.log('pm.response.json():', pm.response.json());\r",
+							"console.log('jsonData.name:', jsonData.name);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Ayrat",
+							"type": "text"
+						},
+						{
+							"key": "age",
+							"value": "35",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "1000",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://162.55.220.72:5005/user_info_3",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"user_info_3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. Проверить, что age в ответе равно age s request (age вбить руками.)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// 5. Проверить, что age в ответе равно age s request (age вбить руками.)\r",
+							"// Создаем запрос:\r",
+							"// POST\r",
+							"// http://162.55.220.72:5005/user_info_3\r",
+							"// Body => form-data:\r",
+							"// KEY:       VALUE:\r",
+							"// name       Ayrat\r",
+							"// age        35\r",
+							"// salary     1000\r",
+							"\r",
+							"// ПАРСИМ age С ОТВЕТА.\r",
+							"// Объявляем переменную, куда будет сохраняться парсинг json с ответа (в этом json лежит нужное нам свойство age):\r",
+							"let jsonData = pm.response.json();\r",
+							"// Объявляем переменную, куда будет сохраняться свойство age из тела ответа, после парсинга:\r",
+							"let user_age = jsonData.age;\r",
+							"// age из ответа у нас теперь есть, осталось сравнить его с age из запроса.\r",
+							"\r",
+							"// ТЕСТИРУЕМ СООТВЕТСТВИЕ age ИЗ ЗАПРОСА И ОТВЕТА.\r",
+							"// Чтобы протестировать сравнение двух значений из запроса и ответа, используем сниппет: Response body: JSON value check\r",
+							"// Инструкция по сниппету:\r",
+							"// >> В сниппете, \"Your test name\" - это будущий текст сообщения во вкладке \"Test Results\", его можно изменить на желаемый текст.\r",
+							"// >> В сниппете, строку var jsonData = pm.response.json(); удаляем, т.к. выше уже эта строка была создана для вывода свойства age с ответа.\r",
+							"// >> В сниппете, вместо (jsonData.value) вписываем свою переменную (user_age), куда мы сохраняем значение age с ответа.\r",
+							"// >> В сниппете, вместо (100) вписываем руками то число ('35'), которое мы отправляем в запросе. Внимание: число мы пишем в кавычках, т.к. в ответе это число\r",
+							"// прилетает в кавычках, а остальные числа без кавычек. Это говорит о том, что число в кавычках является текстом.\r",
+							"// В итоге данный сниппет протестирует соответствие значений свойства age в запросе и в ответе:\r",
+							"pm.test(\"Your test age\", function () {\r",
+							"    pm.expect(user_age).to.eql('35');\r",
+							"});\r",
+							"// Если значения совпадают, то в окне ответа, во вкладке \"Test Results\" отобразится зеленый прямоугольник с названием \"PASS\".\r",
+							"// Если нет, то \"FAIL\".\r",
+							"\r",
+							"// Вывод значений в консоль для визаульного контроля:\r",
+							"console.log('variable \"jsonData\":', jsonData);\r",
+							"console.log('variable \"user_age\":', user_age);\r",
+							"console.log('pm.response.json():', pm.response.json());\r",
+							"console.log('jsonData.age:', jsonData.age);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Ayrat",
+							"type": "text"
+						},
+						{
+							"key": "age",
+							"value": "35",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "1000",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://162.55.220.72:5005/user_info_3",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"user_info_3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6. Проверить, что salary в ответе равно salary s request (salary вбить руками.)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// 6. Проверить, что salary в ответе равно salary s request (salary вбить руками.)\r",
+							"// Создаем запрос:\r",
+							"// POST\r",
+							"// http://162.55.220.72:5005/user_info_3\r",
+							"// Body => form-data:\r",
+							"// KEY:       VALUE:\r",
+							"// name       Ayrat\r",
+							"// age        35\r",
+							"// salary     1000\r",
+							"\r",
+							"// ПАРСИМ salary С ОТВЕТА.\r",
+							"// Объявляем переменную, куда будет сохраняться парсинг json с ответа (в этом json лежит нужное нам свойство salary):\r",
+							"let jsonData = pm.response.json();\r",
+							"// Объявляем переменную, куда будет сохраняться свойство salary из тела ответа, после парсинга:\r",
+							"let user_salary = jsonData.salary;\r",
+							"// salary из ответа у нас теперь есть, осталось сравнить его с salary из запроса.\r",
+							"\r",
+							"// ТЕСТИРУЕМ СООТВЕТСТВИЕ salary ИЗ ЗАПРОСА И ОТВЕТА.\r",
+							"// Чтобы протестировать сравнение двух значений из запроса и ответа, используем сниппет: Response body: JSON value check\r",
+							"// Инструкция по сниппету:\r",
+							"// >> В сниппете, \"Your test name\" - это будущий текст сообщения во вкладке \"Test Results\", его можно изменить на желаемый текст.\r",
+							"// >> В сниппете, строку var jsonData = pm.response.json(); удаляем, т.к. выше уже эта строка была создана для вывода свойства salary с ответа.\r",
+							"// >> В сниппете, вместо (jsonData.value) вписываем свою переменную (user_salary), куда мы сохраняем значение salary с ответа.\r",
+							"// >> В сниппете, вместо (100) вписываем руками то число (1000), которое мы отправляем в запросе.\r",
+							"// В итоге данный сниппет протестирует соответствие значений свойства salary в запросе и в ответе:\r",
+							"pm.test(\"Your test salary\", function () { \r",
+							"    pm.expect(user_salary).to.eql(1000);\r",
+							"});\r",
+							"// Если значения совпадают, то в окне ответа, во вкладке \"Test Results\" отобразится зеленый прямоугольник с названием \"PASS\".\r",
+							"// Если значения не совпадают, то в окне ответа, во вкладке \"Test Results\" отобразится красный прямоугольник с названием \"FAIL\".\r",
+							"\r",
+							"// Вывод значений в консоль для визаульного контроля:\r",
+							"console.log('variable \"jsonData\":', jsonData);\r",
+							"console.log('variable \"user_salary\":', user_salary);\r",
+							"console.log('pm.response.json():', pm.response.json());\r",
+							"console.log('jsonData.salary:', jsonData.salary);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Ayrat",
+							"type": "text"
+						},
+						{
+							"key": "age",
+							"value": "35",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "1000",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://162.55.220.72:5005/user_info_3",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"user_info_3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7. Спарсить request. (POST-body)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// 7. Спарсить request. (POST-body)\r",
+							"// Создаем запрос:\r",
+							"// POST\r",
+							"// http://162.55.220.72:5005/user_info_3\r",
+							"// Body => form-data:\r",
+							"// KEY:       VALUE:\r",
+							"// name       Ayrat\r",
+							"// age        35\r",
+							"// salary     1000\r",
+							"\r",
+							"// Объявляем переменную, куда сохраняем парсинг реквеста (с нашего запроса):\r",
+							"let request_parsing = pm.request;\r",
+							"\r",
+							"// Вывод значений в консоль для визаульного контроля:\r",
+							"console.log(\"request_parsing\", request_parsing)\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Ayrat",
+							"type": "text"
+						},
+						{
+							"key": "age",
+							"value": "35",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "1000",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://162.55.220.72:5005/user_info_3",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"user_info_3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8. Проверить, что name в ответе равно name s request (name забрать из request.)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// 8. Проверить, что name в ответе равно name s request (name забрать из request.)\r",
+							"// Создаем запрос:\r",
+							"// POST\r",
+							"// http://162.55.220.72:5005/user_info_3\r",
+							"// Body => form-data:\r",
+							"// KEY:       VALUE:\r",
+							"// name       Ayrat\r",
+							"// age        35\r",
+							"// salary     1000\r",
+							"\r",
+							"// Response body parsing:\r",
+							"let jsonData = pm.response.json();\r",
+							"\r",
+							"// Response name parsing:\r",
+							"let user_name_response = jsonData.name;\r",
+							"\r",
+							"// Request name parsing:\r",
+							"let user_name_request = request.data.name;\r",
+							"\r",
+							"// Compare response and request user name:\r",
+							"pm.test(\"Compare response and request user name\", function () { \r",
+							"    pm.expect(user_name_response).to.eql(user_name_request);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"// Вывод значений в консоль для визаульного контроля:\r",
+							"console.log('user name response:', user_name_response);\r",
+							"console.log('user name request:', user_name_request);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Ayrat",
+							"type": "text"
+						},
+						{
+							"key": "age",
+							"value": "35",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "1000",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://162.55.220.72:5005/user_info_3",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"user_info_3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9. Проверить, что age в ответе равно age s request (age забрать из request.)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// 9. Проверить, что age в ответе равно age s request (age забрать из request.)\r",
+							"// Создаем запрос:\r",
+							"// POST\r",
+							"// http://162.55.220.72:5005/user_info_3\r",
+							"// Body => form-data:\r",
+							"// KEY:       VALUE:\r",
+							"// name       Ayrat\r",
+							"// age        35\r",
+							"// salary     1000\r",
+							"\r",
+							"// Response body parsing:\r",
+							"let jsonData = pm.response.json();\r",
+							"\r",
+							"// Response age parsing:\r",
+							"let user_age_response = jsonData.age;\r",
+							"\r",
+							"// Request age parsing:\r",
+							"let user_age_request = request.data.age;\r",
+							"\r",
+							"\r",
+							"// Compare response and request user age:\r",
+							"pm.test(\"Compare response and request user age\", function () { \r",
+							"    pm.expect(user_age_response).to.eql(user_age_request);\r",
+							"});\r",
+							"\r",
+							"// Вывод значений в консоль для визаульного контроля:\r",
+							"console.log('user age response:', user_age_response);\r",
+							"console.log('user age request:', user_age_request);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Ayrat",
+							"type": "text"
+						},
+						{
+							"key": "age",
+							"value": "35",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "1000",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://162.55.220.72:5005/user_info_3",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"user_info_3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10. Проверить, что salary в ответе равно salary s request (salary забрать из request.)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// 10. Проверить, что salary в ответе равно salary s request (salary забрать из request.)\r",
+							"// Создаем запрос:\r",
+							"// POST\r",
+							"// http://162.55.220.72:5005/user_info_3\r",
+							"// Body => form-data:\r",
+							"// KEY:       VALUE:\r",
+							"// name       Ayrat\r",
+							"// age        35\r",
+							"// salary     1000\r",
+							"\r",
+							"// Response body parsing:\r",
+							"let jsonData = pm.response.json();\r",
+							"\r",
+							"// Response user salary parsing:\r",
+							"let user_salary_response = +jsonData.salary;\r",
+							"\r",
+							"// Request user salary parsing:\r",
+							"let user_salary_request = +request.data.salary;\r",
+							"\r",
+							"// Compare response and request user salary:\r",
+							"pm.test(\"Compare response and request user salary\", function () { \r",
+							"    pm.expect(user_salary_response).to.eql(user_salary_request);\r",
+							"});\r",
+							"\r",
+							"// Вывод значений в консоль для визаульного контроля:\r",
+							"console.log('user salary response:', user_salary_response);\r",
+							"console.log('user salary request:', user_salary_request);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Ayrat",
+							"type": "text"
+						},
+						{
+							"key": "age",
+							"value": "35",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "1000",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://162.55.220.72:5005/user_info_3",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"user_info_3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "11. Вывести в консоль параметр family из response.",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// 11. Вывести в консоль параметр family из response.\r",
+							"// Создаем запрос:\r",
+							"// POST\r",
+							"// http://162.55.220.72:5005/user_info_3\r",
+							"// Body => form-data:\r",
+							"// KEY:       VALUE:\r",
+							"// name       Ayrat\r",
+							"// age        35\r",
+							"// salary     1000\r",
+							"\r",
+							"// Response body parsing:\r",
+							"let jsonData = pm.response.json();\r",
+							"\r",
+							"// Response user family parsing:\r",
+							"let user_family_response = jsonData.family;\r",
+							"\r",
+							"// Вывод значений в консоль для визаульного контроля:\r",
+							"console.log('user family response:', user_family_response);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Ayrat",
+							"type": "text"
+						},
+						{
+							"key": "age",
+							"value": "35",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "1000",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://162.55.220.72:5005/user_info_3",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"user_info_3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "12. Проверить что u_salary_1_5_year в ответе равно salary*4 (salary забрать из request)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// 12. Проверить что u_salary_1_5_year в ответе равно salary*4 (salary забрать из request)\r",
+							"// Создаем запрос:\r",
+							"// POST\r",
+							"// http://162.55.220.72:5005/user_info_3\r",
+							"// Body => form-data:\r",
+							"// KEY:       VALUE:\r",
+							"// name       Ayrat\r",
+							"// age        35\r",
+							"// salary     1000\r",
+							"\r",
+							"// Response body parsing:\r",
+							"let jsonData = pm.response.json();\r",
+							"\r",
+							"// Response u_salary_1_5_year parsing:\r",
+							"let salary_after_1_5_year = jsonData.family.u_salary_1_5_year;\r",
+							"\r",
+							"// Response user salary parsing:\r",
+							"let user_salary = jsonData.salary;\r",
+							"\r",
+							"// Compare user salary:\r",
+							"pm.test(\"Compare user salary after 1.5 year\", function () { \r",
+							"    pm.expect(salary_after_1_5_year).to.eql(user_salary*4);\r",
+							"});\r",
+							"\r",
+							"// Вывод значений в консоль для визаульного контроля:\r",
+							"console.log('user_salary:', user_salary);\r",
+							"console.log('salary_after_1_5_year:', salary_after_1_5_year);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Ayrat",
+							"type": "text"
+						},
+						{
+							"key": "age",
+							"value": "35",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "1000",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://162.55.220.72:5005/user_info_3",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"user_info_3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
